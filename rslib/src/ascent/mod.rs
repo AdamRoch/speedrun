@@ -316,7 +316,7 @@ impl Collection {
                 Some(eval.rmse_bins as f64),
                 format!(
                     "FSRS's predictions are off by {:.3} on average against your own review \
-                     log; every Memory range below includes that error.",
+                     log; every Memory range above includes that error.",
                     eval.rmse_bins
                 ),
             )),

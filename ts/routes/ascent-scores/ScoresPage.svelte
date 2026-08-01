@@ -45,7 +45,9 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
     <section class="card readiness">
         <div class="readiness-head">
             <h2>Readiness</h2>
-            <span class="chip">Withheld</span>
+            {#if !scores.readiness?.reportable}
+                <span class="chip">Withheld</span>
+            {/if}
         </div>
         {#if scores.readiness?.reportable}
             <p>Readiness is available.</p>
@@ -136,7 +138,8 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
     <footer>
         <p>{scores.calibrationNote}</p>
         <p>
-            Every range above is a {level}% range — the true value falls inside it about
+            Every range above is an {level}% range — the true value falls inside it
+            about
             {level} times in 100. Performance starts from {scores.priorDescription}.
         </p>
     </footer>
