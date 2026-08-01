@@ -1,13 +1,13 @@
 # The Probe
 
-*What it is, why it works, and what it costs. Standalone — assumes nothing.*
+_What it is, why it works, and what it costs. Standalone — assumes nothing._
 
 ---
 
 ## 1. The one-sentence version
 
 A **probe** is an AI-generated reworded version of a flashcard you already have — same fact,
-deliberately unfamiliar phrasing — served *instead of* the original on reviews the scheduler
+deliberately unfamiliar phrasing — served _instead of_ the original on reviews the scheduler
 is already confident you'll pass.
 
 It does not exist in Anki. It is the thing we are building.
@@ -24,7 +24,7 @@ actually tests, because nothing in the model ever varies the wording. Difficulty
 and retrievability are all indexed to one card — one stem, one answer, one surface form.
 
 So a student can grind a deck until their retention graph is beautiful and their practice
-scores don't move. They didn't get better at biochemistry. They got better at *those cards*.
+scores don't move. They didn't get better at biochemistry. They got better at _those cards_.
 
 The framing that makes this precise: **your deck is a training set, the exam is a held-out
 test under distribution shift.** Anki reports training accuracy. Nobody measures the
@@ -62,11 +62,11 @@ original.
 
 ### Reading the outcomes
 
-| What happens | What it means |
-|---|---|
-| Passes the original | Memory confirmed. Roughly what was predicted. Low information. |
-| **Passes the probe** | Knows the *concept*, not just the wording. Evidence of transfer. |
-| **Fails a card they know cold** | **Not a memory failure.** Memory was established and the model was right about it. What broke was the link to a new surface. This is a *transfer* signal — and it is invisible to every tool on the market. |
+| What happens                    | What it means                                                                                                                                                                                               |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Passes the original             | Memory confirmed. Roughly what was predicted. Low information.                                                                                                                                              |
+| **Passes the probe**            | Knows the _concept_, not just the wording. Evidence of transfer.                                                                                                                                            |
+| **Fails a card they know cold** | **Not a memory failure.** Memory was established and the model was right about it. What broke was the link to a new surface. This is a _transfer_ signal — and it is invisible to every tool on the market. |
 
 That last row is the entire product.
 
@@ -80,12 +80,12 @@ inside a habit the student already has. The marginal cost of the measurement is 
 
 **It generates the Performance score.** The project requires three separated scores — Memory
 (DOK 1), Performance (DOK 2/3), Readiness (DOK 4). Performance requires an actual transfer
-measurement. Probe outcomes *are* that measurement. Nothing else on the table produces it.
+measurement. Probe outcomes _are_ that measurement. Nothing else on the table produces it.
 
 **It's additive**, so the required three-arm experiment stays clean: probes on / probes off /
 stock Anki. (A subtractive feature collapses the middle arm into the control.)
 
-**The instrument is also the treatment.** Decades of work on *desirable difficulties* says
+**The instrument is also the treatment.** Decades of work on _desirable difficulties_ says
 varied retrieval conditions produce better transfer than repeated identical retrieval. Probes
 are varied retrieval conditions, injected automatically. So the same mechanism that exposes
 the gap also closes it.
@@ -95,7 +95,7 @@ That gives two separately falsifiable predictions instead of one:
 - **A — the measurement claim.** Semantic stability predicts held-back novel-question accuracy
   better than plain retrievability does.
 - **B — the treatment claim.** The probes-on group outperforms probes-off and stock on
-  held-back novel questions after *equal study time*.
+  held-back novel questions after _equal study time_.
 
 Either can fail independently, and either failure is publishable as "I was wrong, here's the
 evidence."
@@ -116,7 +116,7 @@ evidence."
   - `S_semantic` — the underlying concept. Updated strongly by probe outcomes.
 - **The transfer gap** is the difference between them, aggregated per topic. That's the number
   no study tool has ever shown a student:
-  > *"Your memory is fine. Your transfer is broken in Amino Acids."*
+  > _"Your memory is fine. Your transfer is broken in Amino Acids."_
 
 **Why it must live in Rust:** probe selection is a scheduling decision and the dual-state
 update is a memory-state computation. Both are the scheduler, which lives in the Rust core.
@@ -146,7 +146,7 @@ itself. Needs an embedding-similarity check with generation cutoffs logged.
 ## 8. What it looks like when AI is switched off
 
 Originals still schedule normally, so the Memory score stays fully functional. Probe-dependent
-numbers widen and then refuse to render — which *demonstrates* the give-up rule rather than
+numbers widen and then refuse to render — which _demonstrates_ the give-up rule rather than
 contradicting it. Decks can also ship pre-generated probe packs, so AI-off does not mean
 probe-off.
 
