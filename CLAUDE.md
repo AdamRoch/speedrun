@@ -107,9 +107,12 @@ The non-negotiables, each guarded by a test in `scores.rs`:
   term is measured from the user's own review log via FSRS's `rmse_bins`, not
   a constant.
 
-The screen is `ts/routes/ascent-scores/`, fed by the `AscentScores` rpc. In
-dev it is at `http://localhost:40000/_anki/pages/ascent-scores.html`; there is
-no Qt menu entry yet.
+The screen is `ts/routes/ascent-scores/`, fed by the `AscentScores` rpc,
+opened from `Tools → Ascent Scores…`. SvelteKit pages serve at
+`http://localhost:40000/ascent-scores` (not under `/_anki/pages/` — that form
+is legacy-only; see `is_sveltekit_page` in `qt/aqt/mediasrv.py`). A webview
+that talks to the backend needs its `AnkiWebViewKind` in
+`KINDS_WITH_API_ACCESS` (`qt/aqt/webview.py`), or every rpc 403s.
 
 ## Running Anki
 

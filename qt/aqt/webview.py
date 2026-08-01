@@ -65,6 +65,7 @@ class AnkiWebViewKind(Enum):
     IMPORT_LOG = "import log"
     IMPORT_ANKI_PACKAGE = "anki package import"
     PREFERENCES = "preferences"
+    ASCENT_SCORES = "ascent scores"
 
 
 class AuthInterceptor(QWebEngineUrlRequestInterceptor):
@@ -122,6 +123,22 @@ _bridge_script = _create_bridge_script()
 _profile_with_api_access: QWebEngineProfile | None = None
 _profile_without_api_access: QWebEngineProfile | None = None
 
+# Kinds whose webviews get the Authorization header injected, and with it
+# access to the /_anki/* API. A page that POSTs to the backend but whose kind
+# is missing here renders a 403 instead of its content.
+KINDS_WITH_API_ACCESS = (
+    AnkiWebViewKind.DECK_OPTIONS,
+    AnkiWebViewKind.EDITOR,
+    AnkiWebViewKind.DECK_STATS,
+    AnkiWebViewKind.CHANGE_NOTETYPE,
+    AnkiWebViewKind.BROWSER_CARD_INFO,
+    AnkiWebViewKind.IMPORT_ANKI_PACKAGE,
+    AnkiWebViewKind.IMPORT_CSV,
+    AnkiWebViewKind.IMPORT_LOG,
+    AnkiWebViewKind.PREFERENCES,
+    AnkiWebViewKind.ASCENT_SCORES,
+)
+
 
 class AnkiWebPage(QWebEnginePage):
     def __init__(
@@ -139,17 +156,7 @@ class AnkiWebPage(QWebEnginePage):
         self.open_links_externally = True
 
     def _profileForPage(self, kind: AnkiWebViewKind) -> QWebEngineProfile:
-        have_api_access = kind in (
-            AnkiWebViewKind.DECK_OPTIONS,
-            AnkiWebViewKind.EDITOR,
-            AnkiWebViewKind.DECK_STATS,
-            AnkiWebViewKind.CHANGE_NOTETYPE,
-            AnkiWebViewKind.BROWSER_CARD_INFO,
-            AnkiWebViewKind.IMPORT_ANKI_PACKAGE,
-            AnkiWebViewKind.IMPORT_CSV,
-            AnkiWebViewKind.IMPORT_LOG,
-            AnkiWebViewKind.PREFERENCES,
-        )
+        have_api_access = kind in KINDS_WITH_API_ACCESS
 
         global _profile_with_api_access, _profile_without_api_access
 

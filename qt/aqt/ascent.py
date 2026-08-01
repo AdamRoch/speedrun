@@ -12,7 +12,7 @@ import aqt
 import aqt.main
 from aqt.qt import *
 from aqt.utils import disable_help_button, restoreGeom, saveGeom
-from aqt.webview import AnkiWebView
+from aqt.webview import AnkiWebView, AnkiWebViewKind
 
 
 class AscentScoresDialog(QDialog):
@@ -23,7 +23,7 @@ class AscentScoresDialog(QDialog):
         self.name = "ascentScores"
         disable_help_button(self)
 
-        self.web = AnkiWebView(self, title="ascent scores")
+        self.web = AnkiWebView(self, kind=AnkiWebViewKind.ASCENT_SCORES)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self.web)
@@ -33,7 +33,9 @@ class AscentScoresDialog(QDialog):
         self.show()
 
     def reject(self) -> None:
-        saveGeom(self, self.name)
-        self.web.cleanup()
-        self.web = None  # type: ignore[assignment]
+        # Qt can deliver reject more than once (Esc then close)
+        if self.web is not None:
+            saveGeom(self, self.name)
+            self.web.cleanup()
+            self.web = None  # type: ignore[assignment]
         QDialog.reject(self)
