@@ -3,6 +3,7 @@
 
 #![deny(unused_must_use)]
 
+pub mod ablation;
 pub mod adding;
 pub(crate) mod ankidroid;
 pub mod ankihub;

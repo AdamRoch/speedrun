@@ -63,6 +63,17 @@ ride the revlog and do sync. How probe text reaches a second device
 (pre-generated packs, apkg, or per-device regeneration) is an open captain
 decision.
 
+The thesis-test experiment lives in `rslib/src/ablation.rs` (`just ablation`,
+write-up in `data/ablation/report.md`). Its module docs cover the harness
+gotchas: time travel by shifting the creation stamp, deterministic card ids,
+and why the FSRS load balancer must stay off in all arms.
+
+Build gotchas found the hard way: regenerate `uv.lock` with the _pinned_ uv
+(`out/extracted/uv/uv lock`) — a lockfile from a newer uv fails the build's
+`--locked` sync; and rslib bins compile the lib without dev-dependencies, so
+any tokio trait rslib uses must be a declared feature in `rslib/Cargo.toml`,
+not inherited from dev-deps.
+
 Deck config gotcha: probe settings live on `DeckConfig.Config`, which syncs
 via schema11 JSON — a new proto field **silently drops on sync** unless it is
 also added to `DeckConfSchema11`, both `From` impls, and

@@ -1,0 +1,137 @@
+{
+    "arm_equivalence_off_vs_stock": {
+        "first_divergence": null,
+        "identical_review_sequences": true
+    },
+    "arms": [
+        {
+            "arm": "stock",
+            "learners": 8,
+            "pass_rate": 0.8378924178446852,
+            "probe_served_reviews": 0,
+            "probes_in_collection": 0,
+            "recall_reviews": 10894,
+            "relearning_steps": 504
+        },
+        {
+            "arm": "off",
+            "learners": 8,
+            "pass_rate": 0.8378924178446852,
+            "probe_served_reviews": 0,
+            "probes_in_collection": 200,
+            "recall_reviews": 10894,
+            "relearning_steps": 504
+        },
+        {
+            "arm": "on",
+            "learners": 8,
+            "pass_rate": 0.6442435244013126,
+            "probe_served_reviews": 13400,
+            "probes_in_collection": 200,
+            "recall_reviews": 28646,
+            "relearning_steps": 7818
+        }
+    ],
+    "calibration_heldback": {
+        "card_outcomes_off_arm": {
+            "base_rate_brier": 0.13551176695133993,
+            "brier": 0.13849386676504388,
+            "log_loss": 0.45674926197596416,
+            "mean_forecast": 0.8931096375506405,
+            "n": 2221,
+            "outcome_base_rate": 0.8383610986042324
+        },
+        "description": "FSRS retrievability as forecast, scored only on held-back cards (never used for any tuning)",
+        "original_outcomes_on_arm": {
+            "base_rate_brier": 0.08380883584844248,
+            "brier": 0.08545553999591143,
+            "log_loss": 0.3157967143151383,
+            "mean_forecast": 0.8791489459930419,
+            "n": 2870,
+            "outcome_base_rate": 0.9076655052264808
+        },
+        "probe_outcomes_on_arm": {
+            "base_rate_brier": 0.23200734440937046,
+            "brier": 0.49693242404550775,
+            "log_loss": 1.4000604779969454,
+            "mean_forecast": 0.8829123824575298,
+            "n": 2531,
+            "outcome_base_rate": 0.3658632951402608
+        }
+    },
+    "config": {
+        "cards": 200,
+        "days": 150,
+        "fsrs_parameters": "stock defaults, never fitted",
+        "heldback_every_nth_card": 5,
+        "learners_per_arm": 8,
+        "probe_rate_on_arm": 0.5,
+        "probe_retrievability_threshold": 0.8500000238418579,
+        "rote_fraction": 0.4,
+        "seed": 42
+    },
+    "disclaimer": "All learners are SIMULATED. Probe text cannot influence simulated outcomes; it is exercised for serving and text-level checks only. No human data.",
+    "falsification_condition": "gap<0.05 or gap CI includes 0, or Brier(R->probe) <= Brier(R->card), on held-back cards",
+    "gap": {
+        "description": "on-arm reviews with scheduler retrievability >= threshold: pass rate when the original card was shown vs when the probe was shown",
+        "gap": 0.5588760529276446,
+        "gap_ci95": [
+            0.5494733832295927,
+            0.5682787226256966
+        ],
+        "original": {
+            "n": 13943,
+            "pass_rate": 0.9061894857634656,
+            "passes": 12635,
+            "wilson95": [
+                0.9012373339817873,
+                0.9109178711078009
+            ]
+        },
+        "probe": {
+            "n": 13400,
+            "pass_rate": 0.3473134328358209,
+            "passes": 4654,
+            "wilson95": [
+                0.3392967125282425,
+                0.3554176744278074
+            ]
+        }
+    },
+    "leakage_check": {
+        "exact_duplicates": 0,
+        "max_jaccard_vs_heldback_cards": 0.0,
+        "max_jaccard_vs_heldback_probes": 0.625,
+        "method": "normalized exact match + Jaccard over 3-word shingles; every non-held-back probe vs every held-back item (card and probe text), plus per-probe checks against its own source card",
+        "min_probe_to_own_card_distance": 1.0,
+        "near_dup_vs_heldback_cards_ge_0.8": 0,
+        "near_dup_vs_heldback_probes_ge_0.8": 0,
+        "pairs_checked": 12800,
+        "passed": true,
+        "probes_containing_own_answer": 0
+    },
+    "probe_generators_in_corpus": [
+        "baseline"
+    ],
+    "rote_blindness": {
+        "description": "pass rates for rote vs understood (learner,card) pairs; card-only reviews cannot separate them, probe outcomes can",
+        "off_arm_card_reviews": {
+            "rote_n": 4422,
+            "rote_pass_rate": 0.8444142921754862,
+            "understood_n": 6472,
+            "understood_pass_rate": 0.8334363411619283
+        },
+        "on_arm_probe_reviews": {
+            "rote_n": 8936,
+            "rote_pass_rate": 0.17714861235452103,
+            "understood_n": 4464,
+            "understood_pass_rate": 0.6879480286738351
+        }
+    },
+    "verdict": {
+        "claim_supported_in_simulation": true,
+        "falsified_by_brier": false,
+        "falsified_by_gap": false,
+        "run_valid": true
+    }
+}
