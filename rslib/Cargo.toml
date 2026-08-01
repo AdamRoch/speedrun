@@ -99,7 +99,10 @@ sha2.workspace = true
 snafu.workspace = true
 strum.workspace = true
 tempfile.workspace = true
-tokio.workspace = true
+# io-util listed explicitly: rslib code uses AsyncRead/WriteExt, and without
+# it the lib only compiles when dev-dependencies happen to unify the feature
+# in (building the ablation bin exposed this)
+tokio = { workspace = true, features = ["io-util"] }
 tokio-util.workspace = true
 tower-http.workspace = true
 tracing.workspace = true
