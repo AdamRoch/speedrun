@@ -171,6 +171,22 @@ docs-serve:
 docs-rust:
     cargo doc --open
 
+# Run the three-arm probe ablation experiment with deterministic baseline probes (simulated learners); see data/ablation/report.md
+ablation *args:
+    {{ ninja }} pylib
+    {{ ablation_bin }} --emit-collection out/ablation/corpus.anki2 {{ args }}
+    {{ pyenv_bin }} tools/probe_gen.py out/ablation/corpus.anki2 --deck Default --baseline
+    {{ ablation_bin }} --collection out/ablation/corpus.anki2 --out data/ablation/results.json {{ args }}
+
+# Same experiment with AI-generated probes (needs ANTHROPIC_API_KEY; generation is not reproducible)
+ablation-ai *args:
+    {{ ninja }} pylib
+    {{ ablation_bin }} --emit-collection out/ablation/corpus-ai.anki2 {{ args }}
+    {{ pyenv_bin }} tools/probe_gen.py out/ablation/corpus-ai.anki2 --deck Default
+    {{ ablation_bin }} --collection out/ablation/corpus-ai.anki2 --out data/ablation/results-ai.json {{ args }}
+
+ablation_bin := 'PROTOC="$PWD/out/extracted/protoc/bin/protoc" cargo run --release --package anki --bin ablation --'
+
 # Dispatch CI workflow on a given branch or tag
 ci branch:
     gh workflow run ci.yml --ref {{ branch }}
